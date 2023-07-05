@@ -3,6 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ventanas;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 /**
  *
@@ -10,11 +13,37 @@ package ventanas;
  */
 public class Artistas extends javax.swing.JFrame {
 
+    
     /**
      * Creates new form Artistas
      */
     public Artistas() {
         initComponents();
+        
+         // Código para establecer la conexión a la base de datos
+        Connection connection = null;
+        try {
+            // Establece la conexión utilizando el driver de Oracle
+            String url = "jdbc:oracle:thin:@localhost:1521:ORCL"; // Reemplaza localhost y ORCL con tu configuración
+            String user = "tu_usuario";
+            String password = "tu_contraseña";
+            connection = DriverManager.getConnection(url, user, password);
+
+            // Si llegamos aquí, la conexión fue exitosa
+            System.out.println("Conexión exitosa a la base de datos.");
+        } catch (SQLException e) {
+            // Manejo de errores en caso de que la conexión falle
+            System.err.println("Error al conectar a la base de datos: " + e.getMessage());
+        } finally {
+            // Asegúrate de cerrar la conexión al finalizar
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    System.err.println("Error al cerrar la conexión: " + e.getMessage());
+                }
+            }
+        }
     }
 
     /**
