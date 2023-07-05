@@ -3,9 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ventanas;
+import conexion.ConexionOracle;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
 
 /**
  *
@@ -17,34 +19,19 @@ public class Artistas extends javax.swing.JFrame {
     /**
      * Creates new form Artistas
      */
+
+   private Connection connection;
     public Artistas() {
-        initComponents();
         
-      
-        Connection connection = null;
+        initComponents();
         try {
-
-            String url = "jdbc:oracle:thin:@localhost:1521:ORCL"; // Reemplazar localhost y ORCL con nuestra configuración
-            String user = "tu_usuario";
-            String password = "tu_contraseña";
-            connection = DriverManager.getConnection(url, user, password);
-
-            //  conexión fue exitosa
-            System.out.println("Conexión exitosa a la base de datos.");
+            connection = ConexionOracle.getConnection();
+            // Realiza operaciones de base de datos utilizando la conexión
         } catch (SQLException e) {
-            // Manejo de errores en caso de que la conexión falle
-            System.err.println("Error al conectar a la base de datos: " + e.getMessage());
-        } finally {
-            //cerrar la conexión al finalizar
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    System.err.println("Error al cerrar la conexión: " + e.getMessage());
-                }
-            }
+            e.printStackTrace();
         }
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
